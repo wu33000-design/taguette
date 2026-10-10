@@ -422,6 +422,12 @@ def main():
 
     db = app.DBSession()
     admin = db.query(database.User).get('admin')
+    if config.get('REQUIRE_INITIALIZED_ADMIN') and (
+        admin is None or not admin.hashed_password or admin.disabled
+    ):
+        db.close()
+        raise RuntimeError("Run the Cloud Run init job before starting "
+                           "Taguette")
     if admin is None:
         logger.warning("Creating user 'admin'")
         admin = database.User(login='admin')

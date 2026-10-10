@@ -193,6 +193,9 @@ def make_app(config, debug=False, xsrf_cookies=True):
     ]
 
     base_path = config['BASE_PATH']
+    if not config.get('PASSWORD_RESET_ENABLED', True):
+        routes = [spec for spec in routes if spec.name not in (
+            'reset_password', 'new_password')]
     routes = [
         spec.bake(base_path=base_path) if isinstance(spec, UnbakedURLSpec)
         else spec

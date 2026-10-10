@@ -42,12 +42,14 @@ def connect(db_url, *, external=False, create_tables=None):
         create_tables = not external
 
     if isinstance(db_url, dict):
-        db_dict = db_url
+        db_dict = dict(db_url)
         db_url = db_dict['url']
     else:
         db_dict = {'url': db_url}
 
-    logger.info("Connecting to SQL database %r", db_url)
+    # Never log credentials, including secrets in URL query parameters.
+    logger.info("Connecting to SQL database (%s)",
+                sqlalchemy.engine.make_url(db_url).drivername)
     if db_url.startswith('sqlite:'):
         db_dict['connect_args'] = {'check_same_thread': False}
     engine = engine_from_config(db_dict, prefix='')
@@ -78,7 +80,8 @@ def connect(db_url, *, external=False, create_tables=None):
 
     alembic_cfg = alembic.config.Config()
     alembic_cfg.set_main_option('script_location', 'taguette:migrations')
-    alembic_cfg.set_main_option('sqlalchemy.url', db_url)
+    alembic_cfg.set_main_option('sqlalchemy.url', db_url.replace('%', '%%'))
+    alembic_cfg.attributes['engine'] = engine
 
     with engine.connect() as conn:
         if engine.dialect.has_table(conn, Project.__tablename__):
@@ -115,8 +118,8 @@ def connect(db_url, *, external=False, create_tables=None):
             raise NoSuchTableError('projects')
 
     # Record to Prometheus
-    conn = engine.connect()
-    revision = MigrationContext.configure(conn).get_current_revision()
+    with engine.connect() as conn:
+        revision = MigrationContext.configure(conn).get_current_revision()
     PROM_DATABASE_VERSION.labels(revision).set(1)
 
     DBSession = sessionmaker(bind=engine)
@@ -160,8 +163,8 @@ def _auto_upgrade_db(db_url, conn, alembic_cfg, external):
             print(_("\n    The database schema used by Taguette has "
                     "changed! Because you are not using\n    SQLite, we "
                     "will not attempt a migration automatically; back up "
-                    "your data and\n    use `taguette --database=%(url)s "
-                    "migrate` if you want to proceed.") % dict(url=db_url),
+                    "your data and run the migration command before "
+                    "restarting."),
                   file=sys.stderr, flush=True)
             sys.exit(3)
     else:
@@ -169,9 +172,19 @@ def _auto_upgrade_db(db_url, conn, alembic_cfg, external):
 
 
 def migrate(db_url, revision):
+    if isinstance(db_url, dict):
+        db_dict = dict(db_url)
+        db_url = db_dict['url']
+    else:
+        db_dict = {'url': db_url}
+    engine = engine_from_config(db_dict, prefix='')
     alembic_cfg = alembic.config.Config()
     alembic_cfg.set_main_option('script_location', 'taguette:migrations')
-    alembic_cfg.set_main_option('sqlalchemy.url', db_url)
+    alembic_cfg.set_main_option('sqlalchemy.url', db_url.replace('%', '%%'))
+    alembic_cfg.attributes['engine'] = engine
 
     logger.warning("Performing database upgrade")
-    alembic.command.upgrade(alembic_cfg, revision)
+    try:
+        alembic.command.upgrade(alembic_cfg, revision)
+    finally:
+        engine.dispose()

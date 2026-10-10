@@ -165,7 +165,10 @@ class Application(GracefulExitApplication):
         tornado.locale.load_gettext_translations(str(d), 'taguette_main')
         tornado.locale.set_default_locale(self.config['DEFAULT_LANGUAGE'])
 
-        self.DBSession = database.connect(config['DATABASE'])
+        self.DBSession = database.connect(
+            config['DATABASE'],
+            create_tables=config.get('CREATE_TABLES', True),
+        )
         self.event_waiters = {}
 
         if config['REDIS_SERVER'] is not None:
@@ -196,7 +199,10 @@ class Application(GracefulExitApplication):
         # Get messages from taguette.org
         self.messages = []
         self.messages_event = asyncio.Event()
-        self.check_messages()
+        if config.get('FETCH_MESSAGES', True):
+            self.check_messages()
+        else:
+            self.messages_event.set()
 
     async def _check_messages(self):
         http_client = AsyncHTTPClient()
@@ -457,6 +463,9 @@ class BaseHandler(HandleStreamClosed, RequestHandler):
             user = self.db.query(database.User).get(user.decode('utf-8'))
             if user is None or user.disabled:
                 return None
+            owner = self.application.config.get('SINGLE_USER_LOGIN')
+            if owner and user.login != owner:
+                return None
             self.language = user.language
             return user.login
         else:
@@ -496,7 +505,10 @@ class BaseHandler(HandleStreamClosed, RequestHandler):
 
     def login(self, username):
         logger.info("Logged in as %r", username)
-        self.set_secure_cookie('user', username)
+        options = {}
+        if self.application.config.get('SECURE_COOKIES'):
+            options = {'secure': True, 'httponly': True, 'samesite': 'Lax'}
+        self.set_secure_cookie('user', username, **options)
 
     def logout(self):
         logger.info("Logged out")
@@ -526,6 +538,12 @@ class BaseHandler(HandleStreamClosed, RequestHandler):
                 handler=self,
                 current_user=self.current_user,
                 multiuser=self.application.config['MULTIUSER'],
+                single_user_login=self.application.config.get(
+                    'SINGLE_USER_LOGIN'),
+                event_poll_interval=self.application.config.get(
+                    'EVENT_POLL_INTERVAL', 0),
+                password_reset_enabled=self.application.config.get(
+                    'PASSWORD_RESET_ENABLED', True),
                 register_enabled=self.application.config[
                     'REGISTRATION_ENABLED'
                 ],

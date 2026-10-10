@@ -162,6 +162,7 @@ function deleteURL(url='', args) {
     if(response.status != 204) {
       throw new ApiError(response);
     }
+    requestEventRefresh();
   });
 }
 
@@ -201,7 +202,8 @@ function postJSON(url='', data={}, args) {
       }
       );
     }
-    return response.json().catch(function() { throw new ApiError(response, "Invalid JSON"); });
+    return response.json().catch(function() { throw new ApiError(response, "Invalid JSON"); })
+    .then(function(result) { requestEventRefresh(); return result; });
   });
 }
 
@@ -241,6 +243,7 @@ function patchJSON(url='', data={}, args) {
       }
       );
     } else {
+      requestEventRefresh();
       return null;
     }
   });
@@ -660,6 +663,7 @@ document.getElementById('document-add-form').addEventListener('submit', function
       $(document_add_modal).modal('hide');
       document.getElementById('document-add-form').reset();
       console.log("Document upload complete");
+      requestEventRefresh();
       var doc_id = xhr.response.created;
       var url = base_path + '/project/' + project_id + '/document/' + doc_id;
       window.history.pushState({document_id: doc_id}, "Document " + doc_id, url);
@@ -1867,14 +1871,37 @@ window.addEventListener('blur', function() {
 
 var lastPoll = null;
 var polling = true;
+var eventPollInterval = typeof event_poll_interval === 'undefined' ? 0 : event_poll_interval;
+var eventPollTimer = null;
+var eventPollInFlight = false;
+var eventRefreshPending = false;
+
+function scheduleEventPoll(delay) {
+  clearTimeout(eventPollTimer);
+  eventPollTimer = setTimeout(longPollForEvents, delay);
+}
+
+function requestEventRefresh() {
+  if(!eventPollInterval) { return; }
+  windowLastActive = null;
+  if(eventPollInFlight) {
+    eventRefreshPending = true;
+  } else {
+    scheduleEventPoll(0);
+  }
+}
 
 function maybeResumePolling() {
-  if(!polling) {
+  if(eventPollInterval) {
+    requestEventRefresh();
+  } else if(!polling) {
     longPollForEvents();
   }
 }
 
 function longPollForEvents() {
+  if(eventPollInFlight) { return; }
+  clearTimeout(eventPollTimer);
   // If we've been inactive for 10min, pause polling for now
   if(windowLastActive !== null && (new Date() - windowLastActive > 600000)) {
     console.log("Browser window inactive, stop polling");
@@ -1884,11 +1911,13 @@ function longPollForEvents() {
 
   polling = true;
   lastPoll = Date.now();
+  eventPollInFlight = true;
   getJSON(
     '/api/project/' + project_id + '/events',
     {version: version, from: last_event}
   )
   .then(function(result) {
+    eventPollInFlight = false;
     if(result.reload) {
       console.log("Server sent signal to reload");
       window.location.reload();
@@ -1939,16 +1968,19 @@ function longPollForEvents() {
 
       if('tag_count_changes' in event) {
         var entries = Object.entries(event.tag_count_changes);
-        for(var i = 0; i < entries.length; ++i) {
-          updateTagCount(entries[i][0], entries[i][1]);
+        for(var j = 0; j < entries.length; ++j) {
+          updateTagCount(entries[j][0], entries[j][1]);
         }
       }
       last_event = event.id;
     }
 
     // Re-open connection
-    setTimeout(longPollForEvents, 1);
+    var delay = eventPollInterval && !result.events.length && !eventRefreshPending ? eventPollInterval * 1000 : 1;
+    eventRefreshPending = false;
+    scheduleEventPoll(delay);
   }, function(error) {
+    eventPollInFlight = false;
     console.error("Polling failed:", error);
     if(error instanceof ApiError && error.status == 403) {
       alert(gettext("It appears that you have been logged out."));
@@ -1957,11 +1989,13 @@ function longPollForEvents() {
       alert(gettext("You can no longer access this project."));
       window.location = '/';
     } else {
-      setTimeout(longPollForEvents, Math.max(1, 5000 + lastPoll - Date.now()));
+      scheduleEventPoll(Math.max(1, 5000 + lastPoll - Date.now()));
     }
   })
   .catch(function(error) {
+    eventPollInFlight = false;
     console.error("Polling function error:", error);
+    scheduleEventPoll(5000);
   });
 }
 longPollForEvents();
