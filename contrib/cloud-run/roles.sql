@@ -5,6 +5,9 @@ REVOKE cloudsqlsuperuser FROM taguette_app, taguette_owner, taguette_backup;
 ALTER ROLE taguette_app NOCREATEDB NOCREATEROLE;
 ALTER ROLE taguette_owner NOCREATEDB NOCREATEROLE;
 ALTER ROLE taguette_backup NOCREATEDB NOCREATEROLE;
+-- Cloud SQL administrators are not PostgreSQL superusers. Membership is
+-- needed to manage the owner's default privileges and existing tables.
+GRANT taguette_owner TO CURRENT_USER;
 
 REVOKE ALL ON DATABASE taguette FROM PUBLIC;
 GRANT CONNECT ON DATABASE taguette

@@ -7,8 +7,9 @@ import tempfile
 import unittest
 from unittest import mock
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
+from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm import close_all_sessions
 from tornado.testing import gen_test
 
@@ -251,6 +252,55 @@ class TestPostgresMaintenance(unittest.TestCase):
     def test_runtime_refuses_empty_database(self):
         with self.assertRaises(database.NoSuchTableError):
             database.connect(DATABASE_URI, create_tables=False)
+
+    def test_sql_roles_allow_data_writes_but_not_schema_changes(self):
+        engine = create_engine(DATABASE_URI)
+        roles = ['taguette_owner', 'taguette_app', 'taguette_backup']
+        try:
+            with engine.connect().execution_options(
+                    isolation_level='AUTOCOMMIT') as conn:
+                conn.exec_driver_sql('CREATE ROLE cloudsqlsuperuser')
+                for role in roles:
+                    conn.exec_driver_sql(
+                        "CREATE ROLE %s LOGIN PASSWORD 'test-role-password'"
+                        % role)
+                sql = (Path(__file__).parent /
+                       'contrib/cloud-run/roles.sql').read_text()
+                conn.exec_driver_sql(sql)
+
+            def config(role):
+                url = make_url(DATABASE_URI).set(username=role, password=None)
+                return {'url': url.render_as_string(),
+                        'connect_args': {'password': 'test-role-password'}}
+
+            asyncio.run(cloud.initialize(
+                config('taguette_owner'), 'test-admin-password'))
+            app = database.connect(config('taguette_app'), create_tables=False)
+            with app() as db:
+                db.add(database.Project(name='中文研究', description=''))
+                db.commit()
+                self.assertEqual(db.query(database.Project).count(), 1)
+            with app.kw['bind'].connect() as conn:
+                with self.assertRaises(ProgrammingError):
+                    conn.execute(text('CREATE TABLE forbidden (id integer)'))
+            app.kw['bind'].dispose()
+            reader = database.connect(config('taguette_backup'),
+                                      create_tables=False)
+            with reader() as db:
+                self.assertEqual(db.query(database.Project).count(), 1)
+            with reader.kw['bind'].connect() as conn:
+                with self.assertRaises(ProgrammingError):
+                    conn.execute(text('DELETE FROM projects'))
+            reader.kw['bind'].dispose()
+        finally:
+            with engine.connect().execution_options(
+                    isolation_level='AUTOCOMMIT') as conn:
+                database.Base.metadata.drop_all(conn)
+                for role in roles:
+                    conn.exec_driver_sql('DROP OWNED BY ' + role)
+                    conn.exec_driver_sql('DROP ROLE ' + role)
+                conn.exec_driver_sql('DROP ROLE cloudsqlsuperuser')
+            engine.dispose()
 
 
 if __name__ == '__main__':
