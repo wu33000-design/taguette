@@ -86,7 +86,8 @@ def build_config(env=None):
         X_HEADERS=True, TOS_FILE=None, COOKIES_PROMPT=False,
         EMAIL='Taguette <noreply@' + domain.split(':')[0] + '>',
         MAIL_SERVER={'host': 'localhost', 'port': 25},
-        DEFAULT_LANGUAGE=env.get('TAGUETTE_LANGUAGE', 'en_US'),
+        DEFAULT_LANGUAGE=env.get('TAGUETTE_LANGUAGE', 'zh_TW'),
+        PREFER_DEFAULT_LANGUAGE=True,
         CONVERT_TO_HTML_TIMEOUT=180, CONVERT_FROM_HTML_TIMEOUT=180,
     )
     if not 1 <= config['PORT'] <= 65535:

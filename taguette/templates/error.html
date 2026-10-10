@@ -4,5 +4,5 @@
 
 {% block contents %}
 <h1>{{ error_title }}</h1>
-<p>{{ error_message }} Use the back button of your browser or <a href="/">click here to return to the index</a>.</p>
+<p>{{ error_message }} {% trans url=reverse_url('index') %}Use the back button of your browser or <a href="{{ url }}">click here to return to the index</a>.{% endtrans %}</p>
 {% endblock %}

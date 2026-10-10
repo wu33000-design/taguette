@@ -15,10 +15,10 @@
   <div class="form-group row">
     <div class="col-sm-2 form-check">
       {% if tag.exists %}
-      <input type="checkbox" class="form-check-input" name="tag{{ loop.index0 }}-replace" id="tag{{ loop.index0 }}-replace" aria-label="Replace this tag"{% if tag.enabled %} checked{% endif %} />
+      <input type="checkbox" class="form-check-input" name="tag{{ loop.index0 }}-replace" id="tag{{ loop.index0 }}-replace" aria-label="{{ gettext('Replace this tag') }}"{% if tag.enabled %} checked{% endif %} />
       <label for="tag{{ loop.index0 }}-replace">{% trans "codebook import tag option" %}Replace{% endtrans %}</label>
       {% else %}
-      <input type="checkbox" class="form-check-input" name="tag{{ loop.index0 }}-import" id="tag{{ loop.index0 }}-import" aria-label="Replace this tag"{% if tag.enabled %} checked{% endif %} />
+      <input type="checkbox" class="form-check-input" name="tag{{ loop.index0 }}-import" id="tag{{ loop.index0 }}-import" aria-label="{{ gettext('Import this tag') }}"{% if tag.enabled %} checked{% endif %} />
       <label for="tag{{ loop.index0 }}-import">{% trans "codebook import tag option" %}Import{% endtrans %}</label>
       {% endif %}
     </div>
