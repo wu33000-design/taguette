@@ -38,7 +38,7 @@
             </div>
           </form>
 
-          {% if multiuser %}
+          {% if multiuser and not single_user_login %}
 
           <p><a href="javascript:showMembers()" class="w-100 btn btn-outline-secondary" role="button">{% trans %}Manage collaborators{% endtrans %}</a></p>
 
@@ -376,7 +376,8 @@
   var highlights = {};
   var tags = {{ tags }};
   var members = {{ members }};
-  var version = '{{ version }}';
+  var version = '{{ version }}';{% if event_poll_interval %}
+  var event_poll_interval = {{ event_poll_interval }};{% endif %}
 </script>
 
 <script type="text/javascript" src="{{ reverse_url('trans.js') }}"></script>

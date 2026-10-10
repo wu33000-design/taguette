@@ -91,7 +91,9 @@ class UnsupportedFormat(ConversionError):
 
 PROC_TERM_GRACE = 5  # Wait 5s after SIGTERM before sending SIGKILL
 
-PROC_MAX_CONCURRENT = 4  # Maximum concurrent conversion processes
+PROC_MAX_CONCURRENT = int(os.environ.get('TAGUETTE_CONVERT_CONCURRENCY', '4'))
+if PROC_MAX_CONCURRENT < 1:
+    raise ValueError("TAGUETTE_CONVERT_CONCURRENCY must be positive")
 
 
 class MeasuredSemaphore(asyncio.Semaphore):

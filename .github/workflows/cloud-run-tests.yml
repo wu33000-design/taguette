@@ -1,0 +1,110 @@
+name: Cloud Run single-user tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        database: [sqlite, postgres]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: taguette
+          POSTGRES_PASSWORD: test-only-password
+          POSTGRES_DB: taguette
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install poetry==2.2.1
+      - run: poetry install --no-interaction --with validation -E postgres
+      - run: poetry run scripts/update_translations.sh
+      - name: Test
+        env:
+          TEST_DATABASE: ${{ matrix.database }}
+        run: |
+          if [ "$TEST_DATABASE" = postgres ]; then
+            export TAGUETTE_TEST_DB=postgresql://taguette:test-only-password@localhost/taguette
+          fi
+          poetry run python -m unittest tests tests_cloud -v
+      - run: poetry run flake8 --ignore=W503,W504 taguette tests_cloud.py contrib/cloud-run/config.py contrib/cloud-run/backup.py
+      - run: node --check taguette/static/js/taguette.js
+      - run: node contrib/cloud-run/test-events.cjs
+      - run: bash -n contrib/cloud-run/deploy.sh
+  containers:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: taguette
+          POSTGRES_PASSWORD: test-only-password
+          POSTGRES_DB: taguette
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build web and backup images without deploying
+        run: |
+          docker build -f contrib/cloud-run/Dockerfile -t taguette-cloud:test .
+          docker build -f contrib/cloud-run/Dockerfile.backup -t taguette-backup:test .
+          docker run --rm --entrypoint python taguette-cloud:test -m taguette.cloud --help
+          docker run --rm --entrypoint pg_dump taguette-backup:test --version
+          docker run --rm --entrypoint python taguette-cloud:test -c \
+            'import asyncio; from taguette import convert, main; result = asyncio.run(convert.to_html(b"Cloud Run conversion test", "text/plain", "test.txt", main.DEFAULT_CONFIG)); assert "Cloud Run conversion test" in result'
+      - name: Initialize and start the built web container
+        run: |
+          mkdir -p /tmp/taguette-secrets
+          printf '%s' 'test-only-password' > /tmp/taguette-secrets/db
+          printf '%s' 'test-only-admin-password' > /tmp/taguette-secrets/admin
+          printf '%s' 'test-only-cookie-signing-key-xxxxxxxxxxxxxxxxxx' > /tmp/taguette-secrets/cookie
+          chmod 755 /tmp/taguette-secrets
+          chmod 644 /tmp/taguette-secrets/*
+          docker run --rm --network host --entrypoint python \
+            -v /tmp/taguette-secrets:/secrets:ro \
+            -e TAGUETTE_DB_HOST=127.0.0.1 -e TAGUETTE_DB_USER=taguette \
+            -e TAGUETTE_DB_PASSWORD_FILE=/secrets/db \
+            -e TAGUETTE_ADMIN_PASSWORD_FILE=/secrets/admin \
+            taguette-cloud:test -m taguette.cloud init
+          docker run -d --name taguette-web-test --network host \
+            -v /tmp/taguette-secrets:/secrets:ro \
+            -e TAGUETTE_DB_HOST=127.0.0.1 -e TAGUETTE_DB_USER=taguette \
+            -e TAGUETTE_DB_PASSWORD_FILE=/secrets/db \
+            -e TAGUETTE_SECRET_KEY_FILE=/secrets/cookie \
+            -e TAGUETTE_DOMAIN=example.org -e PORT=8080 taguette-cloud:test
+          curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://localhost:8080/health
+          curl --fail http://localhost:8080/login
+          docker run --rm --network host --entrypoint pg_dump \
+            -e PGHOST=127.0.0.1 -e PGUSER=taguette -e PGDATABASE=taguette \
+            -e PGPASSWORD=test-only-password taguette-backup:test \
+            --schema-only --no-owner --no-acl > /tmp/taguette-test-schema.sql
+          test -s /tmp/taguette-test-schema.sql
+      - name: Show container output on failure
+        if: failure()
+        run: docker logs taguette-web-test || true
+  infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.9.8'
+      - run: terraform -chdir=contrib/cloud-run init -backend=false
+      - run: terraform -chdir=contrib/cloud-run fmt -check
+      - run: terraform -chdir=contrib/cloud-run validate

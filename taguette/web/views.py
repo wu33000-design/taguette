@@ -121,7 +121,8 @@ class Login(BaseHandler):
         else:
             password = self.get_body_argument('password')
             user = self.db.query(database.User).get(login)
-            if user is None or user.disabled:
+            owner = self.application.config.get('SINGLE_USER_LOGIN')
+            if user is None or user.disabled or (owner and login != owner):
                 logger.info("Login: non-existent user")
             elif not await user.check_password(password):
                 logger.info("Login: invalid password for %r", user.login)

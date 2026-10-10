@@ -53,7 +53,10 @@ def run_migrations_online():
 
     """
     url = config.get_main_option('sqlalchemy.url')
-    connectable = create_engine(url)
+    connectable = config.attributes.get('engine')
+    owns_engine = connectable is None
+    if owns_engine:
+        connectable = create_engine(url)
 
     with connectable.connect() as connection:
         context.configure(
@@ -64,6 +67,8 @@ def run_migrations_online():
 
         with context.begin_transaction():
             context.run_migrations()
+    if owns_engine:
+        connectable.dispose()
 
 
 if context.is_offline_mode():

@@ -24,6 +24,15 @@ So, to bolster a fair and equitable entry into qualitative methods, we've made T
 Installation
 ------------
 
+Single-user Google Cloud deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This fork includes a Cloud Run + Cloud SQL PostgreSQL deployment profile,
+with password authentication for one account, short event requests, explicit
+initialization/migration jobs, and private database backups. See
+`the Traditional Chinese deployment guide <contrib/cloud-run/README.zh-TW.md>`_.
+
+
 You can find complete installation instructions on `our website <https://www.taguette.org/install.html>`__, including installers for Windows and MacOS.
 
 Development setup from the repository

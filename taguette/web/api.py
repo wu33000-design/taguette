@@ -702,7 +702,8 @@ class MembersUpdate(BaseHandler):
     @api_auth
     @PROM_REQUESTS.sync('members_update')
     def patch(self, project_id):
-        if not self.application.config['MULTIUSER']:
+        if (not self.application.config['MULTIUSER'] or
+                self.application.config.get('SINGLE_USER_LOGIN')):
             raise HTTPError(404)
         obj = self.get_json()
         project, privileges = self.get_project(project_id)
@@ -955,6 +956,7 @@ class ProjectEvents(BaseHandler):
             self.db.query(database.Command)
             .filter(database.Command.id > from_id)
             .filter(database.Command.project_id == project_id)
+            .order_by(database.Command.id)
             .limit(LIMIT)
         ).all()
 
@@ -964,6 +966,11 @@ class ProjectEvents(BaseHandler):
         if cmds:
             # Convert to JSON, return
             return [cmd.to_json() for cmd in cmds]
+
+        # Short requests read persisted events across instances. This avoids
+        # holding a Cloud Run request open while a single user is reading.
+        if self.application.config.get('EVENT_POLL_INTERVAL', 0):
+            return []
 
         # Subscribe for events (which come as JSON)
         self.wait_future = Future()

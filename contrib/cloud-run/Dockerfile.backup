@@ -1,0 +1,11 @@
+FROM postgres:16-bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 python3-venv tini \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -m venv /opt/backup \
+    && /opt/backup/bin/pip install --no-cache-dir google-cloud-storage==3.17.0 \
+    && useradd --create-home --uid 10001 backup
+COPY contrib/cloud-run/backup.py /app/backup.py
+USER backup
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["/opt/backup/bin/python", "/app/backup.py"]
