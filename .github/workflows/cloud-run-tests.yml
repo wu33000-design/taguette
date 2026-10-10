@@ -1,7 +1,11 @@
 name: Cloud Run single-user tests
 on:
   push:
+    branches: [master]
   pull_request:
+concurrency:
+  group: taguette-cloud-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -19,7 +23,7 @@ jobs:
           POSTGRES_DB: taguette
         ports: ['5432:5432']
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U taguette -d taguette"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -54,7 +58,7 @@ jobs:
           POSTGRES_DB: taguette
         ports: ['5432:5432']
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U taguette -d taguette"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10

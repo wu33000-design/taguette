@@ -4,8 +4,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && python3 -m venv /opt/backup \
     && /opt/backup/bin/pip install --no-cache-dir google-cloud-storage==3.17.0 \
-    && useradd --create-home --uid 10001 backup
+    && useradd --create-home --uid 10001 taguette-backup
 COPY contrib/cloud-run/backup.py /app/backup.py
-USER backup
+USER taguette-backup
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["/opt/backup/bin/python", "/app/backup.py"]

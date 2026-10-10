@@ -135,6 +135,9 @@ bash contrib/cloud-run/deploy.sh schedule
 備份帳號只有讀取資料庫與新增備份物件權限；dump 失敗或為空不會上傳。
 排程請求成功只代表 Job 被啟動，**仍需針對 Job 執行失敗設定告警**。
 同時監控 Cloud SQL 儲存使用量、備份狀態與記憶體。
+備份 Job 的暫存 dump 會占用記憶體；預設 1 GiB 適合小型資料庫。
+資料增長時提高 Job 記憶體，或改採 Cloud SQL 匯出，不能假設 1 GiB
+可備份任意大小的資料庫。
 
 原始文件不會自動保存到 bucket；你可自行上傳至
 `gs://專案ID-taguette-originals`。文件及資料庫可能包含研究個資，兩個
