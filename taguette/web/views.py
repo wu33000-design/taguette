@@ -229,7 +229,8 @@ class TermsOfService(BaseHandler):
 class Account(BaseHandler):
     def get_languages(self):
         return [
-            (loc_code, tornado.locale.get(loc_code).name)
+            (loc_code, '繁體中文（台灣）' if loc_code == 'zh_TW'
+             else tornado.locale.get(loc_code).name)
             for loc_code in tornado.locale.get_supported_locales()
         ]
 

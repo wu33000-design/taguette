@@ -502,6 +502,9 @@ class BaseHandler(HandleStreamClosed, RequestHandler):
             if self.current_user is not None:
                 if self.language is not None:
                     return tornado.locale.get(self.language)
+            if self.application.config.get('PREFER_DEFAULT_LANGUAGE'):
+                return tornado.locale.get(
+                    self.application.config['DEFAULT_LANGUAGE'])
 
     def login(self, username):
         logger.info("Logged in as %r", username)
@@ -537,6 +540,7 @@ class BaseHandler(HandleStreamClosed, RequestHandler):
             return template.render(
                 handler=self,
                 current_user=self.current_user,
+                language_code=self.locale.code.replace('_', '-'),
                 multiuser=self.application.config['MULTIUSER'],
                 single_user_login=self.application.config.get(
                     'SINGLE_USER_LOGIN'),

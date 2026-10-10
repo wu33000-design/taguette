@@ -141,7 +141,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{% trans %}Manage Collaborators{% endtrans %}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ gettext('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -185,7 +185,7 @@
     <form id="document-add-form" class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{% trans "modal window title" %}Add a document{% endtrans %}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ gettext('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -228,7 +228,7 @@
     <form id="document-change-form" class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{% trans "modal window title" %}Edit document{% endtrans %}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ gettext('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -269,7 +269,7 @@
     <form id="highlight-add-form" class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{% trans "modal window title" %}Highlight{% endtrans %}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ gettext('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -302,7 +302,7 @@
       <div class="modal-header">
         <h5 id="tag-add-label-new" class="modal-title">{% trans "modal window title" %}New tag{% endtrans %}</h5>
         <h5 id="tag-add-label-change" class="modal-title" style="display: none;">{% trans "modal window title" %}Change tag{% endtrans %}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ gettext('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -328,8 +328,8 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <form id="tag-merge-form" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Merge tags</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title">{% trans %}Merge tags{% endtrans %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ gettext('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -341,7 +341,7 @@
               <input type="text" class="form-control" id="tag-merge-src-name" disabled />
             </div>
             <div class="col-md-2 form-group">
-              <label for="tag-merge-dest">into</label>
+              <label for="tag-merge-dest">{% trans "tag merge destination" %}into{% endtrans %}</label>
             </div>
             <div class="col-md-5 form-group">
               <select class="form-control-file" id="tag-merge-dest">
@@ -351,8 +351,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Merge tags</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">{% trans %}Merge tags{% endtrans %}</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
       </div>
     </form>
   </div>

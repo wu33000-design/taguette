@@ -93,7 +93,8 @@ jobs:
             -e TAGUETTE_SECRET_KEY_FILE=/secrets/cookie \
             -e TAGUETTE_DOMAIN=example.org -e PORT=8080 taguette-cloud:test
           curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://localhost:8080/health
-          curl --fail http://localhost:8080/login
+          curl --fail -H 'Accept-Language: en-US' http://localhost:8080/login > /tmp/taguette-login.html
+          python -c 'from pathlib import Path; page = Path("/tmp/taguette-login.html").read_text(); assert "登入" in page and "lang=\"zh-TW\"" in page'
           docker run --rm --network host --entrypoint pg_dump \
             -e PGHOST=127.0.0.1 -e PGUSER=taguette -e PGDATABASE=taguette \
             -e PGPASSWORD=test-only-password taguette-backup:test \

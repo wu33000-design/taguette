@@ -48,6 +48,10 @@ class TestCloudConfig(unittest.TestCase):
         self.assertTrue(config['REQUIRE_INITIALIZED_ADMIN'])
         self.assertIsNone(config['REDIS_SERVER'])
         self.assertEqual(config['PORT'], 8081)
+        self.assertEqual(config['DEFAULT_LANGUAGE'], 'zh_TW')
+        self.assertTrue(config['PREFER_DEFAULT_LANGUAGE'])
+        self.assertEqual(cloud.build_config(dict(
+            self.env, TAGUETTE_LANGUAGE='en_US'))['DEFAULT_LANGUAGE'], 'en_US')
         self.assertNotIn('secret:password', config['DATABASE']['url'])
         self.assertEqual(config['DATABASE']['connect_args']['password'],
                          'secret:password@with%characters')
@@ -175,6 +179,53 @@ class TestCloudWeb(MyHTTPTestCase):
             self.assertIn('Secure', cookie)
             self.assertIn('HttpOnly', cookie)
             self.assertIn('SameSite=Lax', cookie)
+
+    @gen_test
+    async def test_traditional_chinese_pages_and_javascript(self):
+        self.application.config.update(
+            DEFAULT_LANGUAGE='zh_TW', PREFER_DEFAULT_LANGUAGE=True)
+        # The deployment default wins over an English browser preference.
+        async with self.aget('/login', headers={
+                'Accept-Language': 'en-US,en;q=0.9'}) as response:
+            body = await response.text()
+            self.assertIn('<html lang="zh-TW">', body)
+            self.assertIn('登入', body)
+            self.assertIn('密碼', body)
+        async with self.aget('/trans.js') as response:
+            self.assertEqual(response.status, 200)
+            body = await response.text()
+            self.assertIn('zh_TW', body)
+            self.assertIn('\\u7de8\\u8f2f', body)  # 編輯 in JSON
+        await self.login()
+        async with self.aget('/') as response:
+            self.assertIn('建立新專案', await response.text())
+        with self.application.DBSession() as db:
+            project = database.Project(name='中文研究', description='')
+            project.members.append(database.ProjectMember(
+                user_login='admin', privileges=database.Privileges.ADMIN))
+            db.add(project)
+            db.commit()
+            project_id = project.id
+        async with self.aget('/project/' + str(project_id)) as response:
+            body = await response.text()
+            for label in ['新增文件', '建立標籤', '合併標籤', '儲存並關閉']:
+                self.assertIn(label, body)
+            self.assertNotIn('>Merge tags<', body)
+        async with self.aget('/missing-page') as response:
+            self.assertEqual(response.status, 404)
+            body = await response.text()
+            self.assertIn('此頁面不存在', body)
+            self.assertIn('按此返回首頁', body)
+        async with self.aget('/account') as response:
+            body = await response.text()
+            self.assertIn('繁體中文', body)
+            self.assertIn('預設語言', body)
+        # An explicit account preference remains available.
+        with self.application.DBSession() as db:
+            db.query(database.User).get('admin').language = 'en_US'
+            db.commit()
+        async with self.aget('/account') as response:
+            self.assertIn('<html lang="en-US">', await response.text())
 
     @gen_test
     async def test_short_events_and_collaboration_disabled(self):

@@ -1,0 +1,1194 @@
+# Chinese (Traditional, Taiwan) translations for Taguette.
+# Copyright (C) 2026 Taguette contributors
+# This file is distributed under the same license as the Taguette project.
+# Traditional Chinese translation for this fork.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Taguette\n"
+"Report-Msgid-Bugs-To: hi@taguette.org\n"
+"POT-Creation-Date: 2026-10-10 14:29+0800\n"
+"PO-Revision-Date: 2026-10-10 14:30+0800\n"
+"Last-Translator: Taguette contributors\n"
+"Language: zh_TW\n"
+"Language-Team: Traditional Chinese (Taiwan)\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: taguette/database/__init__.py:151
+#, python-format
+msgid ""
+"\n"
+"    A backup copy of your database file has been created. If the update\n"
+"    goes horribly wrong, make sure to keep that file, and let us know:\n"
+"    %(backup)s\n"
+msgstr ""
+"\n"
+"    已建立資料庫備份。若更新失敗，請保留此檔案並聯絡我們：\n"
+"    %(backup)s\n"
+
+#: taguette/main.py:448
+#, python-format
+msgid ""
+"\n"
+"    Taguette %(version)s is now running. You can connect to it using this "
+"link:\n"
+"\n"
+"    %(url)s\n"
+msgstr ""
+"\n"
+"    Taguette %(version)s 已啟動。請使用以下連結：\n"
+"\n"
+"    %(url)s\n"
+
+#: taguette/database/__init__.py:163
+msgid ""
+"\n"
+"    The database schema used by Taguette has changed! Because you are not "
+"using\n"
+"    SQLite, we will not attempt a migration automatically; back up your data"
+" and run the migration command before restarting."
+msgstr ""
+"\n"
+"    Taguette 的資料庫結構已變更。由於未使用 SQLite，無法自動遷移。請先備份資料並執行遷移指令，再重新啟動。"
+
+#: taguette/database/__init__.py:140
+msgid ""
+"\n"
+"    The database schema used by Taguette has changed! We will try to\n"
+"    update your workspace automatically.\n"
+msgstr ""
+"\n"
+"    Taguette 的資料庫結構已變更，將嘗試自動更新你的工作區。\n"
+
+#: taguette/web/base.py:530
+msgid ""
+" | Please report issues via <a "
+"href=\"https://gitlab.com/remram44/taguette\">GitLab</a> or <a "
+"href=\"mailto:hi@taguette.org\">hi@taguette.org</a>!"
+msgstr ""
+" | 請透過 <a href=\"https://gitlab.com/remram44/taguette\">GitLab</a> 或 <a "
+"href=\"mailto:hi@taguette.org\">hi@taguette.org</a> 回報問題！"
+
+#: taguette/templates/export_codebook.html:16
+#, python-format
+msgid "%(number)d document"
+msgid_plural "%(number)d documents"
+msgstr[0] "%(number)d 份文件"
+
+#: taguette/templates/export_codebook.html:16
+#, python-format
+msgid "%(number)d highlight"
+msgid_plural "%(number)d highlights"
+msgstr[0] "%(number)d 個標記片段"
+
+#: taguette/templates/welcome.html:12
+#, python-format
+msgid "<a href=\"%(url)s\">Register now</a> for free and get started!"
+msgstr "免費<a href=\"%(url)s\">立即註冊</a>，開始使用！"
+
+#: taguette/templates/project.html:386
+msgid "<em>n</em>ew highlight <span class=\"sr-only\">(shortcut: n)</span>"
+msgstr "新增標記片段 <span class=\"sr-only\">（快捷鍵：n）</span>"
+
+#: taguette/templates/welcome.html:9
+msgid ""
+"<span style=\"font-family:BadScript;\"><a "
+"href=\"https://www.taguette.org/\">TAGUETTE</a></span> is an open-source "
+"web-based document tagging tool for qualitative data analysis."
+msgstr ""
+"<span style=\"font-family:BadScript;\"><a "
+"href=\"https://www.taguette.org/\">TAGUETTE</a></span> "
+"是開源的網頁文件標記工具，可用於質性資料分析。"
+
+#: taguette/templates/export_highlights.html:25
+#, python-format
+msgctxt "exported highlight details"
+msgid "<strong>Document:</strong> %(doc)s"
+msgstr "<strong>文件：</strong>%(doc)s"
+
+#: taguette/templates/cookies_prompt.html:12
+msgctxt "button on cookie warning page"
+msgid "Accept cookies"
+msgstr "接受 Cookie"
+
+#: taguette/templates/project_import_codebook.html:24
+msgid "Accepted format: CSV"
+msgstr "支援格式：CSV"
+
+#: taguette/templates/base.html:45
+msgctxt "navigation dropdown menu"
+msgid "Account"
+msgstr "帳號"
+
+#: taguette/templates/account.html:4
+msgctxt "page title"
+msgid "Account settings"
+msgstr "帳號設定"
+
+#: taguette/templates/account.html:7
+msgctxt "title"
+msgid "Account settings"
+msgstr "帳號設定"
+
+#: taguette/templates/project.html:150
+msgctxt "modal window title"
+msgid "Add Collaborators"
+msgstr "新增協作者"
+
+#: taguette/templates/project.html:76
+msgid "Add a document"
+msgstr "新增文件"
+
+#: taguette/templates/project.html:187
+msgctxt "modal window title"
+msgid "Add a document"
+msgstr "新增文件"
+
+#: taguette/templates/project.html:165
+msgctxt "form submit button"
+msgid "Add to project"
+msgstr "加入專案"
+
+#: taguette/main.py:267
+msgid "Address to bind on"
+msgstr "綁定的位址"
+
+#: taguette/templates/project_delete.html:9
+#, python-format
+msgid ""
+"Are you sure you want to delete this project? It currently has "
+"<strong>%(documents)s documents and %(highlights)s highlights in %(tags)s "
+"tags</strong>. There is no way to undo."
+msgstr ""
+"確定要刪除此專案嗎？目前共有 <strong>%(documents)s 份文件、%(highlights)s 個標記片段及 %(tags)s "
+"個標籤</strong>。此操作無法復原。"
+
+#: taguette/templates/account.html:30
+msgctxt "language selection option"
+msgid "Auto-detect"
+msgstr "自動偵測"
+
+#: taguette/templates/project.html:82
+msgid "Backlight"
+msgstr "顯示標記背景"
+
+#: taguette/templates/project.html:56 taguette/templates/project.html:126
+msgid "CSV"
+msgstr "CSV"
+
+#: taguette/templates/project.html:160
+msgctxt "permission level"
+msgid "Can't change collaborators / delete project"
+msgstr "無法變更協作者或刪除專案"
+
+#: taguette/templates/project.html:176 taguette/templates/project.html:219
+#: taguette/templates/project.html:319 taguette/templates/project.html:355
+msgid "Cancel"
+msgstr "取消"
+
+#: taguette/templates/project.html:304
+msgctxt "modal window title"
+msgid "Change tag"
+msgstr "編輯標籤"
+
+#: taguette/templates/project.html:144 taguette/templates/project.html:188
+#: taguette/templates/project.html:231 taguette/templates/project.html:272
+#: taguette/templates/project.html:305 taguette/templates/project.html:332
+msgid "Close"
+msgstr "關閉"
+
+#: taguette/main.py:318
+msgid ""
+"Configuration file for the server. The default configuration can be "
+"generated using the `default-config` command"
+msgstr "伺服器設定檔。可使用 `default-config` 指令產生預設設定。"
+
+#: taguette/templates/login.html:76 taguette/templates/new_password.html:21
+msgctxt "form label"
+msgid "Confirm password"
+msgstr "確認密碼"
+
+#: taguette/templates/cookies_prompt.html:3
+msgctxt "page title"
+msgid "Cookie warning"
+msgstr "Cookie 使用說明"
+
+#: taguette/templates/cookies_prompt.html:6
+msgctxt "title"
+msgid "Cookie warning"
+msgstr "Cookie 使用說明"
+
+#: taguette/templates/project.html:96
+msgid "Count [0&rarr;9]"
+msgstr "數量 [少&rarr;多]"
+
+#: taguette/templates/project.html:97
+msgid "Count [9&rarr;0]"
+msgstr "數量 [多&rarr;少]"
+
+#: taguette/templates/project_new.html:26
+msgctxt "form submit button"
+msgid "Create"
+msgstr "建立"
+
+#: taguette/templates/index.html:21
+msgctxt "button in project list"
+msgid "Create a new project"
+msgstr "建立新專案"
+
+#: taguette/templates/project.html:101 taguette/templates/project.html:286
+msgid "Create a tag"
+msgstr "建立標籤"
+
+#: taguette/templates/project_import_codebook_confirm.html:36
+msgctxt "form submit button"
+msgid "Create tags"
+msgstr "建立標籤"
+
+#: taguette/templates/project.html:169
+msgid "Current Collaborators"
+msgstr "目前的協作者"
+
+#: taguette/templates/project.html:58 taguette/templates/project.html:123
+msgid "DOCX"
+msgstr "DOCX"
+
+#: taguette/main.py:276
+#, python-format
+msgid ""
+"Database location or connection string, for example 'project.db' or "
+"'postgresql://me:pw@localhost/mydb' (default: %(default)r)"
+msgstr ""
+"資料庫位置或連線字串，例如 'project.db' 或 "
+"'postgresql://me:pw@localhost/mydb'（預設：%(default)r）"
+
+#: taguette/templates/account.html:30
+msgctxt "language selection option"
+msgid "Default language"
+msgstr "預設語言"
+
+#: taguette/templates/project.html:260
+msgid "Delete document"
+msgstr "刪除文件"
+
+#: taguette/templates/project_delete.html:13
+msgctxt "submit button"
+msgid "Delete forever"
+msgstr "永久刪除"
+
+#: taguette/templates/project.html:292
+msgid "Delete highlight"
+msgstr "刪除標記片段"
+
+#: taguette/templates/project.html:68
+msgid "Delete project"
+msgstr "刪除專案"
+
+#: taguette/templates/project_delete.html:3
+msgctxt "page title"
+msgid "Delete project"
+msgstr "刪除專案"
+
+#: taguette/templates/project_delete.html:6
+msgctxt "title"
+msgid "Delete project: confirm?"
+msgstr "確認刪除專案？"
+
+#: taguette/templates/project.html:320
+msgid "Delete tag"
+msgstr "刪除標籤"
+
+#: taguette/templates/project.html:214
+msgctxt "document add form placeholder"
+msgid "Description"
+msgstr "說明"
+
+#: taguette/templates/project.html:255
+msgctxt "document change form placeholder"
+msgid "Description"
+msgstr "說明"
+
+#: taguette/templates/project_new.html:19
+msgctxt "form label for new project description"
+msgid "Description"
+msgstr "說明"
+
+#: taguette/templates/project.html:36
+msgctxt "project metadata form label"
+msgid "Description"
+msgstr "說明"
+
+#: taguette/templates/project.html:313
+msgctxt "tag change form placeholder"
+msgid "Description"
+msgstr "說明"
+
+#: taguette/validate.py:18
+msgid "Description is too long"
+msgstr "說明過長"
+
+#: taguette/validate.py:86
+msgid "Document name cannot be empty"
+msgstr "文件名稱不得空白"
+
+#: taguette/validate.py:88
+msgid "Document name is too long"
+msgstr "文件名稱過長"
+
+#. Left pane tab, keep short
+#: taguette/templates/project.html:19
+msgctxt "tab"
+msgid "Documents"
+msgstr "文件"
+
+#: taguette/main.py:287
+msgid "Don't change umask on startup"
+msgstr "啟動時不要變更 umask"
+
+#: taguette/main.py:271
+msgid "Don't open the web browser"
+msgstr "不要開啟瀏覽器"
+
+#: taguette/templates/project.html:230
+msgctxt "modal window title"
+msgid "Edit document"
+msgstr "編輯文件"
+
+#: taguette/templates/account.html:20 taguette/templates/login.html:82
+#: taguette/templates/reset_password.html:17
+msgctxt "form label for email address"
+msgid "Email"
+msgstr "電子郵件"
+
+#: taguette/web/views.py:190
+msgid "Email address is already used"
+msgstr "此電子郵件已被使用"
+
+#: taguette/validate.py:68
+msgid "Email address is too long"
+msgstr "電子郵件過長"
+
+#: taguette/validate.py:64
+msgid "Email cannot be empty"
+msgstr "電子郵件不得空白"
+
+#: taguette/web/api.py:481
+msgid "Empty highlight"
+msgstr "標記片段不得空白"
+
+#: taguette/import_codebook.py:79
+msgid "Empty tag name"
+msgstr "標籤名稱不得空白"
+
+#: taguette/templates/project.html:196
+msgctxt "form placeholder"
+msgid "Enter a document name"
+msgstr "輸入文件名稱"
+
+#: taguette/templates/token_needed.html:3
+msgctxt "page title"
+msgid "Error"
+msgstr "錯誤"
+
+#: taguette/web/base.py:651
+#, python-format
+msgctxt "page title"
+msgid "Error %d"
+msgstr "錯誤 %d"
+
+#: taguette/web/__init__.py:60 taguette/web/base.py:644
+msgctxt "page title"
+msgid "Error 404"
+msgstr "錯誤 404"
+
+#: taguette/web/views.py:700
+msgid "Error importing tags, concurrent changes caused a conflict"
+msgstr "匯入標籤失敗：同時進行的變更造成衝突"
+
+#: taguette/templates/project.html:55 taguette/templates/project.html:125
+msgid "Excel"
+msgstr "Excel"
+
+#: taguette/templates/project.html:51
+msgid "Export codebook"
+msgstr "匯出編碼簿"
+
+#: taguette/templates/project.html:47
+msgid "Export project"
+msgstr "匯出專案"
+
+#: taguette/templates/project.html:119
+msgid "Export this view"
+msgstr "匯出目前檢視"
+
+#: taguette/validate.py:108
+msgid "File name is too long"
+msgstr "檔名過長"
+
+#: taguette/templates/project_import_codebook.html:21
+msgctxt "form label for codebook file"
+msgid "File:"
+msgstr "檔案："
+
+#: taguette/templates/project_import.html:11
+msgctxt "form label for project file"
+msgid "File:"
+msgstr "檔案："
+
+#: taguette/templates/login.html:45
+msgctxt "form link"
+msgid "Forgot password"
+msgstr "忘記密碼"
+
+#: taguette/templates/project.html:159
+msgctxt "permission level"
+msgid "Full permissions"
+msgstr "完整權限"
+
+#. Default tag description
+#: taguette/web/views.py:466
+msgid "Further review required"
+msgstr "需要進一步檢視"
+
+#: taguette/templates/project_delete.html:14
+#: taguette/templates/project_import_codebook.html:30
+#: taguette/templates/project_import_codebook_confirm.html:37
+msgctxt "cancel button"
+msgid "Go back"
+msgstr "返回"
+
+#: taguette/templates/project.html:57 taguette/templates/project.html:122
+msgid "HTML"
+msgstr "HTML"
+
+#: taguette/templates/index.html:14
+msgid "Here are your projects:"
+msgstr "你的專案："
+
+#: taguette/templates/project.html:271
+msgctxt "modal window title"
+msgid "Highlight"
+msgstr "標記片段"
+
+#. Left pane tab, keep short
+#: taguette/templates/project.html:22
+msgctxt "tab"
+msgid "Highlights"
+msgstr "標記片段"
+
+#: taguette/templates/base.html:26
+msgctxt "navigation item"
+msgid "Home"
+msgstr "首頁"
+
+#: taguette/templates/login.html:94
+#, python-format
+msgid "I accept the <a href=\"%(url)s\">terms of service</a>"
+msgstr "我接受<a href=\"%(url)s\">服務條款</a>"
+
+#: taguette/templates/reset_password.html:26
+msgid ""
+"If you didn't set an email address, you can try contacting your server "
+"administrator."
+msgstr "若未設定電子郵件，請聯絡伺服器管理者。"
+
+#: taguette/templates/reset_password.html:13
+msgid ""
+"If you had set an email address in your profile, you can enter it below and "
+"a link to reset your password will be sent to you."
+msgstr "若已在帳號資料中設定電子郵件，請在下方輸入。我們會寄送重設密碼的連結。"
+
+#: taguette/templates/project_import_codebook_confirm.html:22
+msgctxt "codebook import tag option"
+msgid "Import"
+msgstr "匯入"
+
+#: taguette/templates/project.html:218
+msgctxt "submit button"
+msgid "Import"
+msgstr "匯入"
+
+#: taguette/templates/project_import_codebook.html:6
+#: taguette/templates/project_import_codebook_confirm.html:6
+msgctxt "title"
+msgid "Import a codebook"
+msgstr "匯入編碼簿"
+
+#: taguette/templates/project_import.html:6
+msgctxt "title"
+msgid "Import a project"
+msgstr "匯入專案"
+
+#: taguette/templates/index.html:23
+msgctxt "button in project list"
+msgid "Import a project file"
+msgstr "匯入專案檔案"
+
+#: taguette/templates/project.html:64
+msgid "Import codebook"
+msgstr "匯入編碼簿"
+
+#: taguette/templates/project_import_codebook.html:3
+#: taguette/templates/project_import_codebook_confirm.html:3
+msgctxt "page title"
+msgid "Import codebook"
+msgstr "匯入編碼簿"
+
+#: taguette/templates/project_import.html:25
+msgctxt "form submit button"
+msgid "Import project"
+msgstr "匯入專案"
+
+#: taguette/templates/project_import.html:3
+msgctxt "page title"
+msgid "Import project"
+msgstr "匯入專案"
+
+#: taguette/templates/project_import_codebook_confirm.html:21
+msgid "Import this tag"
+msgstr "匯入此標籤"
+
+#: taguette/main.py:362
+msgid "Invalid BASE_PATH"
+msgstr "BASE_PATH 設定無效"
+
+#: taguette/import_codebook.py:86
+msgid "Invalid CSV file"
+msgstr "CSV 檔案格式錯誤"
+
+#: taguette/main.py:369
+msgid "Invalid DOMAIN"
+msgstr "DOMAIN 設定無效"
+
+#: taguette/validate.py:66
+msgid "Invalid email address"
+msgstr "電子郵件格式錯誤"
+
+#: taguette/validate.py:110
+msgid "Invalid file name"
+msgstr "檔名格式錯誤"
+
+#: taguette/import_codebook.py:38
+msgid "Invalid file: CSV expected"
+msgstr "檔案格式錯誤：請使用 CSV"
+
+#: taguette/web/views.py:136
+msgid "Invalid login or password"
+msgstr "帳號或密碼錯誤"
+
+#: taguette/web/views.py:378
+msgid "Invalid token"
+msgstr "權杖無效"
+
+#: taguette/main.py:330
+#, python-format
+msgid "Invalid umask: %(arg)s"
+msgstr "無效的 umask：%(arg)s"
+
+#: taguette/templates/account.html:27
+msgctxt "form label for language selection"
+msgid "Language"
+msgstr "語言"
+
+#: taguette/templates/project.html:206 taguette/templates/project.html:247
+msgid "Left to right"
+msgstr "由左至右"
+
+#: taguette/templates/project.html:131
+msgid "Load a document on the left"
+msgstr "請從左側選擇文件"
+
+#: taguette/templates/project.html:80 taguette/templates/project.html:105
+#: taguette/templates/project.html:285
+msgid "Loading..."
+msgstr "載入中……"
+
+#: taguette/templates/login.html:43
+msgctxt "form submit button"
+msgid "Log in"
+msgstr "登入"
+
+#: taguette/templates/base.html:56
+msgctxt "navigation item"
+msgid "Log in"
+msgstr "登入"
+
+#: taguette/templates/login.html:3
+msgctxt "page title"
+msgid "Log in"
+msgstr "登入"
+
+#: taguette/templates/login.html:9
+msgctxt "tab"
+msgid "Log in"
+msgstr "登入"
+
+#: taguette/templates/base.html:51
+msgctxt "navigation item"
+msgid "Log out"
+msgstr "登出"
+
+#: taguette/templates/account.html:14 taguette/templates/login.html:30
+#: taguette/templates/login.html:63
+msgctxt "form label for user name"
+msgid "Login"
+msgstr "帳號"
+
+#: taguette/templates/project.html:143
+msgid "Manage Collaborators"
+msgstr "管理協作者"
+
+#: taguette/templates/project.html:43
+msgid "Manage collaborators"
+msgstr "管理協作者"
+
+#: taguette/main.py:297
+msgid "Manually trigger a database migration"
+msgstr "手動執行資料庫遷移"
+
+#: taguette/templates/project.html:331 taguette/templates/project.html:354
+msgid "Merge tags"
+msgstr "合併標籤"
+
+#: taguette/templates/project.html:317
+msgctxt "button in tag change modal window"
+msgid "Merge..."
+msgstr "合併……"
+
+#: taguette/main.py:354
+#, python-format
+msgid "Missing required configuration variable %(var)s"
+msgstr "缺少必要的設定變數 %(var)s"
+
+#: taguette/templates/project.html:240
+msgctxt "document change form placeholder"
+msgid "Name"
+msgstr "名稱"
+
+#: taguette/templates/project_new.html:13
+msgctxt "form label for new project name"
+msgid "Name"
+msgstr "名稱"
+
+#: taguette/templates/project.html:32
+msgctxt "project metadata form label"
+msgid "Name"
+msgstr "名稱"
+
+#: taguette/templates/project.html:312
+msgctxt "tag change form placeholder"
+msgid "Name"
+msgstr "名稱"
+
+#: taguette/templates/project_delete.html:8
+#, python-format
+msgctxt "project delete page"
+msgid "Name: %(project_name)s"
+msgstr "名稱：%(project_name)s"
+
+#: taguette/templates/account.html:38
+msgid "New password"
+msgstr "新密碼"
+
+#: taguette/templates/project_new.html:3
+msgctxt "page title"
+msgid "New project"
+msgstr "新增專案"
+
+#: taguette/templates/project_new.html:6
+msgctxt "title"
+msgid "New project"
+msgstr "新增專案"
+
+#: taguette/templates/project.html:303
+msgctxt "modal window title"
+msgid "New tag"
+msgstr "新增標籤"
+
+#: taguette/import_codebook.py:48
+msgid "No 'tag', 'name', or 'path' column"
+msgstr "找不到「tag」、「name」或「path」欄位"
+
+#: taguette/web/views.py:714
+msgid "No file provided"
+msgstr "未提供檔案"
+
+#: taguette/templates/project_import.html:20
+msgid "No file selected..."
+msgstr "尚未選擇檔案……"
+
+#: taguette/web/api.py:527 taguette/web/api.py:612
+msgid "No such highlight"
+msgstr "找不到此標記片段"
+
+#: taguette/web/api.py:352 taguette/web/api.py:386 taguette/web/api.py:418
+#: taguette/web/api.py:477 taguette/web/api.py:553
+msgid "No such tag"
+msgstr "找不到此標籤"
+
+#: taguette/web/views.py:382
+msgid "No user associated with that token"
+msgstr "找不到此權杖對應的帳號"
+
+#: taguette/import_codebook.py:74
+msgid "Not enough columns"
+msgstr "欄位數量不足"
+
+#: taguette/web/api.py:52
+msgid "Not logged in"
+msgstr "尚未登入"
+
+#: taguette/import_codebook.py:45
+msgid "Not sure which column to use for tag name"
+msgstr "無法判斷哪個欄位是標籤名稱"
+
+#: taguette/main.py:269
+msgid "Open web browser to the application"
+msgstr "在瀏覽器中開啟應用程式"
+
+#: taguette/templates/account.html:23 taguette/templates/login.html:85
+msgid ""
+"Optional. <em>We will not share your email with anyone. This is only used in"
+" case you forget your password.</em>"
+msgstr "選填。<em>我們不會分享你的電子郵件，只會在你忘記密碼時使用。</em>"
+
+#: taguette/main.py:310
+msgid "Output to this file rather than stdout"
+msgstr "輸出至此檔案"
+
+#: taguette/templates/project.html:59 taguette/templates/project.html:124
+msgid "PDF"
+msgstr "PDF"
+
+#: taguette/templates/login.html:36 taguette/templates/login.html:70
+#: taguette/templates/new_password.html:15
+msgctxt "form label"
+msgid "Password"
+msgstr "密碼"
+
+#: taguette/web/views.py:385
+msgid "Password has already been changed"
+msgstr "密碼已經變更"
+
+#: taguette/web/views.py:332
+msgid "Password reset for Taguette"
+msgstr "重設 Taguette 密碼"
+
+#: taguette/web/views.py:181 taguette/web/views.py:265 taguette/web/views.py:421
+msgid "Passwords do not match"
+msgstr "兩次輸入的密碼不一致"
+
+#: taguette/templates/new_password.html:10
+msgid "Please enter a new password below:"
+msgstr "請在下方輸入新密碼："
+
+#: taguette/validate.py:76
+msgid "Please use a longer password"
+msgstr "請使用更長的密碼"
+
+#: taguette/validate.py:78
+msgid "Please use a shorter password"
+msgstr "請使用更短的密碼"
+
+#: taguette/templates/login.html:66
+msgid "Please use only letters, numbers, dot, underscore, and dashes (._-)"
+msgstr "請僅使用英文字母、數字、句點、底線及連字號（._-）"
+
+#: taguette/main.py:265
+msgid "Port number on which to listen"
+msgstr "監聽連接埠"
+
+#: taguette/main.py:308
+msgid "Print the default server configuration"
+msgstr "顯示預設伺服器設定"
+
+#. Left pane tab, keep short
+#: taguette/templates/project.html:16
+msgctxt "tab"
+msgid "Project info"
+msgstr "專案資訊"
+
+#: taguette/validate.py:24
+msgid "Project name cannot be empty"
+msgstr "專案名稱不得空白"
+
+#: taguette/validate.py:26
+msgid "Project name is too long"
+msgstr "專案名稱過長"
+
+#: taguette/templates/project_import.html:17
+msgctxt "form label for project dropdown"
+msgid "Project:"
+msgstr "專案："
+
+#: taguette/templates/project_import_codebook.html:15
+msgctxt "form label for project name (readonly)"
+msgid "Project:"
+msgstr "專案："
+
+#: taguette/templates/project.html:54
+msgid "QDC (XML)"
+msgstr "QDC (XML)"
+
+#: taguette/templates/login.html:101
+msgctxt "form submit button"
+msgid "Register"
+msgstr "註冊"
+
+#: taguette/templates/login.html:13
+msgctxt "tab"
+msgid "Register"
+msgstr "註冊"
+
+#: taguette/templates/account.html:44
+msgid "Repeat new password"
+msgstr "再次輸入新密碼"
+
+#: taguette/templates/project_import_codebook_confirm.html:19
+msgctxt "codebook import tag option"
+msgid "Replace"
+msgstr "取代"
+
+#: taguette/templates/project_import_codebook_confirm.html:18
+msgid "Replace this tag"
+msgstr "取代此標籤"
+
+#: taguette/templates/new_password.html:3 taguette/templates/reset_password.html:3
+msgctxt "page title"
+msgid "Reset password"
+msgstr "重設密碼"
+
+#: taguette/templates/project_import_codebook.html:29
+msgctxt "form submit button"
+msgid "Review"
+msgstr "檢視"
+
+#: taguette/templates/project.html:210 taguette/templates/project.html:251
+msgid "Right to left"
+msgstr "由右至左"
+
+#: taguette/web/views.py:581
+#, python-format
+msgid "Row %d: %s"
+msgstr "第 %d 列：%s"
+
+#: taguette/main.py:316
+msgid "Run in server mode, suitable for a multi-user deployment"
+msgstr "以適用於多人部署的伺服器模式執行"
+
+#: taguette/templates/project.html:175 taguette/templates/project.html:259
+#: taguette/templates/project.html:291 taguette/templates/project.html:318
+msgid "Save & Close"
+msgstr "儲存並關閉"
+
+#: taguette/templates/project.html:100
+msgid "See all highlights"
+msgstr "查看所有標記片段"
+
+#: taguette/templates/reset_password.html:22
+msgctxt "password reset form submit button"
+msgid "Send"
+msgstr "寄送"
+
+#: taguette/templates/new_password.html:28
+msgctxt "form submit button"
+msgid "Set new password"
+msgstr "設定新密碼"
+
+#: taguette/main.py:283
+msgid "Set the file creation mask (umask) on systems that support it."
+msgstr "在支援的系統上設定檔案建立遮罩（umask）。"
+
+#: taguette/templates/base.html:47
+msgctxt "navigation item"
+msgid "Settings"
+msgstr "設定"
+
+#: taguette/templates/base.html:41
+msgid "Single-user mode"
+msgstr "單人模式"
+
+#: taguette/templates/email_reset_password.html:1
+#, python-format
+msgid ""
+"Someone has requested to reset the password on the Taguette account "
+"associated with this email. If this was you, please follow this link: <a "
+"href=\"%(link)s\">%(link)s</a>"
+msgstr ""
+"有人要求重設此電子郵件對應的 Taguette 帳號密碼。若是你提出的要求，請開啟此連結：<a "
+"href=\"%(link)s\">%(link)s</a>"
+
+#: taguette/validate.py:96
+msgid "Tag path cannot be empty"
+msgstr "標籤路徑不得空白"
+
+#: taguette/validate.py:98
+msgid "Tag path is too long"
+msgstr "標籤路徑過長"
+
+#: taguette/templates/export_highlights.html:26
+msgctxt "exported highlight details"
+msgid "Tags:"
+msgstr "標籤："
+
+#: taguette/templates/base.html:71
+#, python-format
+msgid ""
+"Taguette %(version)s is released under a <a "
+"href=\"https://gitlab.com/remram44/taguette/blob/master/LICENSE.txt\">BSD-3-Clause"
+" license</a>, &#169; Rémi Rampin and Taguette contributors | <a "
+"href=\"https://www.taguette.org/getting-started.html\">User "
+"Documentation</a>"
+msgstr ""
+"Taguette %(version)s 採用 <a "
+"href=\"https://gitlab.com/remram44/taguette/blob/master/LICENSE.txt\">BSD-3-Clause"
+" 授權</a>，&#169; Rémi Rampin 與 Taguette 貢獻者 | <a "
+"href=\"https://www.taguette.org/getting-started.html\">使用說明</a>"
+
+#: taguette/templates/export_codebook.html:10
+#: taguette/templates/export_codebook.html:13
+msgctxt "exported codebook document title"
+msgid "Taguette Codebook"
+msgstr "Taguette 編碼簿"
+
+#: taguette/templates/base.html:37
+#, python-format
+msgctxt "navigation item"
+msgid "Taguette Guide %(external_icon)s"
+msgstr "Taguette 使用指南 %(external_icon)s"
+
+#: taguette/templates/export_highlights.html:8
+#: taguette/templates/export_highlights.html:20
+msgctxt "exported highlights document title"
+msgid "Taguette highlights"
+msgstr "Taguette 標記片段"
+
+#: taguette/templates/export_highlights.html:6
+#: taguette/templates/export_highlights.html:18
+#, python-format
+msgctxt "exported highlights document title"
+msgid "Taguette highlights: %(path)s"
+msgstr "Taguette 標記片段：%(path)s"
+
+#: taguette/templates/base.html:49
+msgctxt "navigation item"
+msgid "Terms of Service"
+msgstr "服務條款"
+
+#: taguette/templates/tos.html:4
+msgctxt "page title"
+msgid "Terms of Service"
+msgstr "服務條款"
+
+#: taguette/web/views.py:201
+msgid "Terms of Service must be accepted"
+msgstr "必須接受服務條款"
+
+#: taguette/templates/login.html:90
+msgctxt "link from registration form"
+msgid "Terms of service"
+msgstr "服務條款"
+
+#: taguette/templates/project.html:94
+msgid "Text [a&rarr;z]"
+msgstr "名稱 [a&rarr;z]"
+
+#: taguette/templates/project.html:95
+msgid "Text [z&rarr;a]"
+msgstr "名稱 [z&rarr;a]"
+
+#: taguette/templates/project_import_codebook.html:8
+msgid ""
+"The file should have a column for the tag names, called 'name' or 'tag' or "
+"'path'. It can also optionally have a column called 'description'. Other "
+"columns are ignored."
+msgstr "檔案必須包含標籤名稱欄位，欄名為「name」、「tag」或「path」。也可加入「description」欄位作為說明，其他欄位會略過。"
+
+#: taguette/web/api.py:779
+msgid "There must be one admin"
+msgstr "必須保留至少一位管理者"
+
+#: taguette/web/api.py:841
+msgid "This database could not be updated to the current version"
+msgstr "無法將此資料庫更新至目前版本"
+
+#: taguette/web/api.py:835
+msgid ""
+"This database is an unknown version. It might have been written by a more "
+"recent version of Taguette, please check for updates"
+msgstr "無法辨識此資料庫的版本，可能由較新版的 Taguette 建立。請檢查是否有更新。"
+
+#: taguette/web/views.py:303
+msgid "This email address is not associated with any user"
+msgstr "沒有帳號使用此電子郵件"
+
+#: taguette/web/api.py:845 taguette/web/api.py:879
+msgid "This is not a Taguette project file"
+msgstr "這不是 Taguette 專案檔案"
+
+#: taguette/templates/email_reset_password.html:5
+msgid "This link will expire in 1 day."
+msgstr "此連結將於 1 天後失效。"
+
+#: taguette/web/__init__.py:61 taguette/web/base.py:645
+msgid "This page does not exist."
+msgstr "此頁面不存在。"
+
+#: taguette/templates/cookies_prompt.html:7
+msgid ""
+"This website uses cookies to store your identity (if you choose to log in) "
+"and as a protection against <a href=\"https://en.wikipedia.org/wiki/Cross-"
+"site_request_forgery\">cross-site request forgery (CSRF)</a>. Before "
+"continuing, you must accept their use by clicking the button below. Those "
+"<strong>are not</strong> \"third-party\" or \"tracking\" cookies."
+msgstr ""
+"本網站使用 Cookie 儲存登入身分，並防範<a href=\"https://en.wikipedia.org/wiki/Cross-"
+"site_request_forgery\">跨站請求偽造（CSRF）</a>。請先點選下方按鈕接受使用 Cookie。這些 Cookie "
+"<strong>不是</strong>第三方或追蹤用 Cookie。"
+
+#: taguette/templates/base.html:20
+msgid "Toggle navigation"
+msgstr "展開或收合導覽列"
+
+#: taguette/web/api.py:82 taguette/web/api.py:114 taguette/web/api.py:208
+#: taguette/web/api.py:247 taguette/web/api.py:312 taguette/web/api.py:347
+#: taguette/web/api.py:383 taguette/web/api.py:408 taguette/web/api.py:464
+#: taguette/web/api.py:523 taguette/web/api.py:609 taguette/web/api.py:716
+msgid "Unauthorized"
+msgstr "沒有存取權限"
+
+#: taguette/templates/account.html:51
+msgctxt "form submit button"
+msgid "Update"
+msgstr "更新"
+
+#: taguette/templates/error.html:7
+#, python-format
+msgid ""
+"Use the back button of your browser or <a href=\"%(url)s\">click here to "
+"return to the index</a>."
+msgstr "請使用瀏覽器的返回按鈕，或<a href=\"%(url)s\">按此返回首頁</a>。"
+
+#: taguette/templates/project_import_codebook.html:7
+#: taguette/templates/project_import_codebook_confirm.html:7
+msgid ""
+"Use this form to import an existing codebook into your project. Existing "
+"tags will not be deleted, new tags will be added alongside them."
+msgstr "將既有編碼簿匯入此專案。現有標籤會保留，新標籤將一併加入。"
+
+#: taguette/validate.py:49
+msgid "User login cannot be empty"
+msgstr "帳號不得空白"
+
+#: taguette/validate.py:56
+msgid "User login contains forbidden characters"
+msgstr "帳號包含不允許的字元"
+
+#: taguette/validate.py:53
+msgid "User login is not lowercase"
+msgstr "帳號必須使用小寫英文字母"
+
+#: taguette/validate.py:51
+msgid "User login is too long"
+msgstr "帳號過長"
+
+#: taguette/web/views.py:183
+msgid "User name is taken"
+msgstr "此帳號已被使用"
+
+#: taguette/templates/project.html:155
+msgctxt "project members form placeholder"
+msgid "Username"
+msgstr "帳號"
+
+#: taguette/templates/welcome.html:10
+msgid ""
+"Using this tool, you can upload a collection of documents, create a "
+"hierarchy of tags, and annotate portions of documents with tags and notes "
+"that you can recall and organize later."
+msgstr "你可以上傳文件、建立階層式標籤，並為文件片段加上標籤與註記，方便日後查閱及整理。"
+
+#: taguette/templates/project.html:161
+msgctxt "permission level"
+msgid "View & make changes"
+msgstr "檢視與編輯"
+
+#: taguette/templates/project.html:162
+msgctxt "permission level"
+msgid "View only"
+msgstr "僅供檢視"
+
+#: taguette/templates/welcome.html:4
+msgctxt "page title"
+msgid "Welcome"
+msgstr "歡迎"
+
+#: taguette/templates/welcome.html:8
+msgctxt "title"
+msgid "Welcome"
+msgstr "歡迎"
+
+#: taguette/templates/index.html:10
+#, python-format
+msgid "Welcome %(user_login)s"
+msgstr "歡迎，%(user_login)s"
+
+#: taguette/templates/index.html:12
+msgid "Welcome!"
+msgstr "歡迎！"
+
+#: taguette/templates/project_import_codebook_confirm.html:11
+msgid "You are about to create the following tags:"
+msgstr "即將建立以下標籤："
+
+#: taguette/web/views.py:502
+msgid "You don't have permission to delete this project"
+msgstr "你沒有刪除此專案的權限"
+
+#: taguette/web/views.py:536 taguette/web/views.py:563
+msgid "You don't have permission to import a codebook"
+msgstr "你沒有匯入編碼簿的權限"
+
+#: taguette/templates/index.html:19
+msgid "You have no projects yet."
+msgstr "目前沒有專案。"
+
+#: taguette/templates/token_needed.html:6
+msgid ""
+"Your browser did not supply a secret token to authenticate with the "
+"application. Please check the console for the correct URL to log in, or "
+"simply restart Taguette."
+msgstr "瀏覽器未提供驗證用的權杖。請查看主控台中的登入網址，或重新啟動 Taguette。"
+
+#: taguette/templates/email_reset_password.html:3
+#, python-format
+msgid "Your user name is: <strong>%(login)s</strong>"
+msgstr "你的帳號是：<strong>%(login)s</strong>"
+
+#: taguette/main.py:293
+msgid "additional commands"
+msgstr "其他指令"
+
+#: taguette/templates/export_codebook.html:16
+msgctxt "separate number of highlights from number of documents"
+msgid "in"
+msgstr "分布於"
+
+#. Default tag name
+#: taguette/web/views.py:464
+msgid "interesting"
+msgstr "值得關注"
+
+#: taguette/templates/project.html:344
+msgctxt "tag merge destination"
+msgid "into"
+msgstr "合併至"
+
+#: taguette/templates/login.html:65
+msgid "letters, numbers, dot, underscore, and dashes"
+msgstr "英文字母、數字、句點、底線及連字號"
+
