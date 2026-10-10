@@ -222,6 +222,8 @@ class TestPostgresMaintenance(unittest.TestCase):
         close_all_sessions()
         engine = create_engine(DATABASE_URI)
         database.Base.metadata.drop_all(engine)
+        with engine.begin() as conn:
+            conn.exec_driver_sql('DROP TABLE IF EXISTS alembic_version')
         engine.dispose()
 
     def test_init_is_idempotent_and_reset_is_explicit(self):
@@ -259,6 +261,9 @@ class TestPostgresMaintenance(unittest.TestCase):
         try:
             with engine.connect().execution_options(
                     isolation_level='AUTOCOMMIT') as conn:
+                # Upstream tests leave Alembic's table outside Base.metadata.
+                # Initialize a fresh schema owned by the maintenance role.
+                conn.exec_driver_sql('DROP TABLE IF EXISTS alembic_version')
                 conn.exec_driver_sql('CREATE ROLE cloudsqlsuperuser')
                 for role in roles:
                     conn.exec_driver_sql(
